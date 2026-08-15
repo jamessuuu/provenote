@@ -25,3 +25,8 @@ test-results/
 # generate-agent-files.js) every time the dev server starts — not source.
 apps/web/AGENTS.md
 apps/web/CLAUDE.md
+
+# Build artifact: copied from node_modules by scripts/copy-c2pa-wasm.mjs,
+# part of `pnpm run build` / apps/web's `predev` — never hand-edited,
+# always regenerated (same discipline as graticule's public/worker/).
+/apps/web/public/c2pa/

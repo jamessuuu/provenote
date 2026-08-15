@@ -1,0 +1,55 @@
+{
+  "_provenance": "Recorded verbatim from a real browser run of @contentauth/c2pa-web 0.7.1's reader.manifestStore() against the SAME signed JPEG as recorded-validates.json, after a single byte inside its embedded-thumbnail scan data was flipped (buf[target] ^= 0xff) post-signing — genuine hard-binding hash breakage, not an invented result. Captured 2026-08-16 while verifying docs/SPEC.md D1.",
+  "active_manifest": "urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca",
+  "manifests": {
+    "urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca": {
+      "claim_generator": "testapp/1.0.0",
+      "claim_generator_info": [
+        { "name": "TestApp", "version": "1.0.0", "org.contentauth.c2pa_rs": "0.90.15" }
+      ],
+      "title": "My Title",
+      "format": "image/jpeg",
+      "instance_id": "xmp.iid:813ee422-9736-4cdc-9be6-4e35ed8e41cb",
+      "thumbnail": {
+        "format": "image/jpeg",
+        "identifier": "self#jumbf=/c2pa/urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca/c2pa.assertions/c2pa.thumbnail.claim.jpeg"
+      },
+      "assertions": [
+        {
+          "label": "c2pa.actions.v2",
+          "data": {
+            "actions": [{ "action": "c2pa.opened" }],
+            "metadata": {
+              "reviewRatings": [
+                { "explanation": "Something untracked happened", "code": "c2pa.unknown", "value": 4 }
+              ]
+            }
+          }
+        },
+        { "label": "my.assertion", "data": { "any_tag": "whatever I want" } }
+      ],
+      "signature_info": {
+        "alg": "Es256",
+        "issuer": "C2PA Test Signing Cert",
+        "common_name": "C2PA Signer",
+        "cert_serial_number": "640229841392226413189608867977836244731148734950",
+        "time": "2026-08-15T17:01:05+00:00"
+      },
+      "label": "urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca",
+      "claim_version": 1
+    }
+  },
+  "validation_status": [
+    {
+      "code": "signingCredential.untrusted",
+      "url": "self#jumbf=/c2pa/urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca/c2pa.signature",
+      "explanation": "signing certificate untrusted"
+    },
+    {
+      "code": "assertion.hashedURI.mismatch",
+      "url": "self#jumbf=/c2pa/urn:uuid:01f267b8-38ee-453e-b697-6da6d3da38ca/c2pa.assertions/c2pa.thumbnail.claim.jpeg",
+      "explanation": "hash does not match assertion data: self#jumbf=c2pa.assertions/c2pa.thumbnail.claim.jpeg"
+    }
+  ],
+  "validation_state": "Invalid"
+}
