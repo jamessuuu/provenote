@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="provenote mark: two closed links of a chain, and a third that stays open">
+  <title>provenote</title>
+
+  <ellipse cx="32" cy="50" rx="20" ry="13" fill="none" stroke="#1A1712" stroke-width="9"/>
+  <ellipse cx="56" cy="50" rx="20" ry="13" fill="none" stroke="#1A1712" stroke-width="9"/>
+  <path d="M 71.963 38.853 A 15 15 0 1 1 77.365 64.266" fill="none" stroke="#B45309" stroke-width="9" stroke-linecap="round"/>
+</svg>

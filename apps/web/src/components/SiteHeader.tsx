@@ -1,0 +1,15 @@
+import Link from "next/link";
+import { BrandGlyph } from "./BrandMark";
+
+export function SiteHeader() {
+  return (
+    <header className="site-header">
+      <div className="shell site-header__row">
+        <Link href="/" className="site-header__brand">
+          <BrandGlyph size={28} />
+          <span className="site-header__wordmark">provenote</span>
+        </Link>
+      </div>
+    </header>
+  );
+}

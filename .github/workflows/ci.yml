@@ -1,0 +1,54 @@
+name: CI
+
+# NOTE: this repo has no remote configured during the build session that
+# authored it (see docs/DEVIATIONS.md) — this workflow documents the
+# intended gate but has never executed on GitHub Actions during the build.
+# The real verifier used throughout the build is `pnpm run ci`, run
+# locally. Per BATCH-2-STANDARDS.md #2, local green is not CI green; this
+# only becomes true once the publication batch pushes and Actions runs it
+# for real.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Unit tests
+        run: pnpm run unit
+
+      - name: Fixture hash integrity
+        run: pnpm run fixtures:verify
+
+      - name: Build (brand + static export + zero-functions gate)
+        run: pnpm run build
+
+      - name: e2e (incl. zero-upload network-interception proof)
+        run: pnpm run e2e:full

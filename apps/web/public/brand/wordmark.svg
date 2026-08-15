@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" role="img" aria-label="provenote">
+  <title>provenote</title>
+  <g transform="translate(0,0) scale(0.72)">
+    <ellipse cx="14" cy="32" rx="15" ry="10" fill="none" stroke="#1A1712" stroke-width="7"/>
+    <ellipse cx="30" cy="32" rx="15" ry="10" fill="none" stroke="#1A1712" stroke-width="7"/>
+    <path d="M 19.963 20.853 A 15 15 0 1 1 25.365 46.266" fill="none" stroke="#B45309" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <text x="58" y="42" font-family="ui-monospace, 'JetBrains Mono', Menlo, Consolas, monospace" font-size="30" fill="#1A1712" letter-spacing="-0.5">provenote</text>
+</svg>

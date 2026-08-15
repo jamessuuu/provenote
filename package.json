@@ -1,0 +1,41 @@
+{
+  "name": "provenote",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A C2PA honesty test: drop an image, see its full provenance chain in plain language, then the Gallery of Limits — three adversarially-built demonstrations of what a valid chain does not and cannot prove. Nothing uploads.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "lint": "eslint .",
+    "unit": "vitest run",
+    "brand": "node scripts/brand.mjs",
+    "copy-wasm": "node scripts/copy-c2pa-wasm.mjs",
+    "fixtures:build": "node scripts/build-fixtures.mjs",
+    "fixtures:verify": "node scripts/verify-fixtures.mjs",
+    "build:web": "pnpm --filter @provenote/web run build",
+    "build": "pnpm run brand && pnpm run copy-wasm && pnpm run build:web && pnpm run zero-functions",
+    "zero-functions": "node scripts/check-zero-functions.mjs",
+    "serve:static": "node scripts/serve-static.mjs",
+    "e2e:smoke": "playwright test --grep @smoke",
+    "e2e:full": "playwright test",
+    "ci": "pnpm run typecheck && pnpm run lint && pnpm run unit && pnpm run fixtures:verify && pnpm run build && pnpm run e2e:full"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@playwright/test": "1.62.1",
+    "eslint": "^9.0.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.11.0",
+    "playwright": "1.62.1",
+    "sharp": "^0.34.4",
+    "tsx": "^4.23.12",
+    "typescript": "5.9.3",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "4.1.10"
+  }
+}

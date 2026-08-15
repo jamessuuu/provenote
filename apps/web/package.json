@@ -1,0 +1,26 @@
+{
+  "name": "@provenote/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "node ../../scripts/brand.mjs && node ../../scripts/copy-c2pa-wasm.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@contentauth/c2pa-web": "^0.7.0",
+    "@provenote/core": "workspace:*",
+    "next": "16.3.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "5.9.3"
+  }
+}
