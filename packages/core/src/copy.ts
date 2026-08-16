@@ -1,4 +1,4 @@
-import type { ProvesLine } from "./types.js";
+import type { ProvesLine } from "./types";
 
 /**
  * The three top-level headlines, verbatim from docs/SPEC.md's Inspector

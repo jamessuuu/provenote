@@ -1,4 +1,4 @@
-import { ASSERTION_COPY, GENERIC_ASSERTION_LINE, HEADLINES, INGREDIENT_LINE, SIGNER_LINE } from "./copy.js";
+import { ASSERTION_COPY, GENERIC_ASSERTION_LINE, HEADLINES, INGREDIENT_LINE, SIGNER_LINE } from "./copy";
 import type {
   AssertionSummary,
   ChainSummary,
@@ -6,7 +6,7 @@ import type {
   RawManifest,
   RawManifestStore,
   ValidationStatusSummary,
-} from "./types.js";
+} from "./types";
 
 /**
  * The chain-summary transformer: raw c2pa-web lib output -> provenote's

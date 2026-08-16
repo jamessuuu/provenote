@@ -4,8 +4,8 @@
  */
 export const CORE_VERSION = "0.1.0";
 
-export { summarizeChain, SIGNER_LINE, INGREDIENT_LINE } from "./chain-summary.js";
-export { HEADLINES, ASSERTION_COPY, GENERIC_ASSERTION_LINE } from "./copy.js";
+export { summarizeChain, SIGNER_LINE, INGREDIENT_LINE } from "./chain-summary";
+export { HEADLINES, ASSERTION_COPY, GENERIC_ASSERTION_LINE } from "./copy";
 export type {
   AssertionSummary,
   ChainState,
@@ -20,4 +20,4 @@ export type {
   RawValidationStatus,
   SignerSummary,
   ValidationStatusSummary,
-} from "./types.js";
+} from "./types";
