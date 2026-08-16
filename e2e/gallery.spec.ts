@@ -1,10 +1,42 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FIXTURES_DIR = path.resolve(__dirname, "..", "fixtures");
 const fixture = (name: string) => path.join(FIXTURES_DIR, name);
+
+/**
+ * Walks every element and reports how much horizontal slack (viewport
+ * width minus right edge) each one has. Used only when the 320px overflow
+ * assertion fails, to name the exact offending element(s) instead of just
+ * the document-level pixel count — this is what let a runner-only 1px
+ * overflow (CI's Linux font metrics vs. a dev machine's) get root-caused
+ * without needing a round trip through Actions. See docs/DEVIATIONS.md.
+ */
+async function describeOverflow(page: Page): Promise<string> {
+  return page.evaluate(() => {
+    const clientWidth = document.documentElement.clientWidth;
+    const offenders: { label: string; rightOverflow: number }[] = [];
+    document.querySelectorAll("*").forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const rightOverflow = rect.right - clientWidth;
+      const selfOverflow = el.scrollWidth - el.clientWidth;
+      if (rightOverflow > 0.5 || selfOverflow > 0.5) {
+        const cls = typeof el.className === "string" && el.className.trim() ? `.${el.className.trim().replace(/\s+/g, ".")}` : "";
+        const text = (el.textContent ?? "").trim().slice(0, 40);
+        offenders.push({
+          label: `${el.tagName.toLowerCase()}${cls} right=${rect.right.toFixed(2)} (+${rightOverflow.toFixed(2)}px past edge) selfOverflow=${selfOverflow}px text="${text}"`,
+          rightOverflow,
+        });
+      }
+    });
+    offenders.sort((a, b) => b.rightOverflow - a.rightOverflow);
+    return offenders.length
+      ? `offending element(s), worst first:\n${offenders.map((o) => o.label).join("\n")}`
+      : "no single element measured past the viewport edge — overflow may come from combined/rounded widths";
+  });
+}
 
 /**
  * The full e2e suite docs/SPEC.md's M4 requires: every Gallery of Limits
@@ -161,16 +193,19 @@ test.describe("320px — no horizontal scroll", () => {
 
     await page.goto("/");
     let overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(overflow, `homepage overflows by ${overflow}px at 320px`).toBeLessThanOrEqual(0);
+    let detail = overflow > 0 ? await describeOverflow(page) : "";
+    expect(overflow, `homepage overflows by ${overflow}px at 320px\n${detail}`).toBeLessThanOrEqual(0);
 
     await page.locator('input[type="file"]').setInputFiles(fixture("f2-fabricated-signed.jpg"));
     await expect(page.locator(".chain-summary__eyebrow")).toHaveText("VALIDATES");
     overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(overflow, `result view overflows by ${overflow}px at 320px`).toBeLessThanOrEqual(0);
+    detail = overflow > 0 ? await describeOverflow(page) : "";
+    expect(overflow, `result view overflows by ${overflow}px at 320px\n${detail}`).toBeLessThanOrEqual(0);
     await page.screenshot({ path: "test-results/320px-result.png", fullPage: true });
 
     await page.goto("/gallery/");
     overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-    expect(overflow, `gallery page overflows by ${overflow}px at 320px`).toBeLessThanOrEqual(0);
+    detail = overflow > 0 ? await describeOverflow(page) : "";
+    expect(overflow, `gallery page overflows by ${overflow}px at 320px\n${detail}`).toBeLessThanOrEqual(0);
   });
 });

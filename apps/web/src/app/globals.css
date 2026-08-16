@@ -63,6 +63,17 @@ h4 {
   line-height: 1.2;
   letter-spacing: -0.01em;
   margin: 0 0 var(--space-2);
+  /* Headings carry single long unbreakable words ("provenote",
+     "Limitations") set in a monospace face at large sizes. Monospace
+     glyph widths vary meaningfully by platform (the CI runner's fallback
+     font is measurably wider per character than a typical dev machine's),
+     so a fixed-width word that comfortably fits on one platform can be a
+     few px wider on another. break-word is a no-op whenever the word
+     already fits (the overwhelming majority of renders); it only engages
+     as a last resort exactly when a word would otherwise push past the
+     viewport edge, which is what actually caused a Linux-CI-only 1px
+     horizontal-overflow failure at 320px — see docs/DEVIATIONS.md. */
+  overflow-wrap: break-word;
 }
 
 h1 {
@@ -174,12 +185,15 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: var(--space-1);
   padding: var(--space-2) var(--space-3);
 }
 
 .site-header__nav {
   display: flex;
-  gap: var(--space-2);
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
 }
 
 .site-header__nav a {
