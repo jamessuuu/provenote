@@ -46,3 +46,38 @@ codes observed.
 
 This deviation does not touch D2 (fixture 2's death condition) — fixture
 2 built and validated on the first attempt; see fixtures/README.md.
+
+## M3 — packages/core's internal imports dropped their `.js` extensions
+
+`chain-summary.ts`, `copy.ts`, and `index.ts` originally wrote their
+internal relative imports the NodeNext/strict-ESM way
+(`from "./copy.js"`, resolving to `copy.ts`) — valid and typechecked
+cleanly under `moduleResolution: "Bundler"` the whole time. M1 and M2
+never actually bundled this code for the browser (M1 only ever
+`import type`s from `@provenote/core`, which is erased at compile time).
+The first time M3's Inspector imported real values
+(`summarizeChain`, `SIGNER_LINE`, `HEADLINES`, …), Next 16.3.1's
+Turbopack failed to resolve those same `.js`-suffixed imports when
+bundling `@provenote/core` for the client — a real, reproduced build
+failure (`Module not found: Can't resolve './copy.js'`), not a
+hypothetical. Switched every internal import to extensionless
+(`from "./copy"`) — valid under the same `moduleResolution: "Bundler"`
+setting, and Turbopack resolves it correctly (confirmed: clean build
+after the change). Not spec-facing — SPEC.md never mandated an import
+style — but recorded here since it reverses a specific choice M1 made
+deliberately.
+
+## M5 — /docs/limitations cites the arXiv paper by its named headings, not numbered sections
+
+SPEC.md's M5 line asks for "citations with section refs." arXiv:2604.24890
+has no numbered sections at all — confirmed in
+`showcase-program/research/batch2-c2pa-verify.md`'s own methodology note:
+"No numbered sections (no '§3.2' style references exist in the source) —
+headings are named only." `/docs/limitations` therefore cites this paper
+by its own named headings ("Executive Summary", "Key Findings §1", etc.,
+matching how the research doc itself cites it) rather than manufacturing
+numbered references the source doesn't have. C2PA spec/Explainer
+citations link to the specific dated version (2.4) of the page quoted;
+where a quote sits in unstructured running prose rather than a named
+subsection (true of the Explainer quote used), the page says so
+explicitly instead of inventing a section number for it.

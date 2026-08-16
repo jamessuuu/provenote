@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { BrandGlyph } from "@/components/BrandMark";
 import { Inspector } from "@/components/inspector/Inspector";
 
@@ -22,6 +23,10 @@ export default function HomePage() {
         <p>
           provenote does not detect AI-generated images, and never will. It explains chains; it
           never judges content.
+        </p>
+        <p>
+          See three adversarially-built demonstrations in the <Link href="/gallery/">Gallery of Limits</Link>,
+          or the full citation list in <Link href="/docs/limitations/">Limitations</Link>.
         </p>
       </div>
       <div className="shell page-inspector">
