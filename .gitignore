@@ -35,3 +35,8 @@ apps/web/CLAUDE.md
 # part of `pnpm run build` / apps/web's `predev` — never hand-edited,
 # always regenerated (same discipline as graticule's public/worker/).
 /apps/web/public/c2pa/
+
+# Build artifact: copied from fixtures/ by scripts/copy-fixtures.mjs so
+# the Gallery of Limits can serve them same-origin. fixtures/ itself
+# (committed, with fixtures/hashes.json) is the source of truth.
+/apps/web/public/fixtures/

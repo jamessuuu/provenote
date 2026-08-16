@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "predev": "node ../../scripts/brand.mjs && node ../../scripts/copy-c2pa-wasm.mjs",
+    "predev": "node ../../scripts/brand.mjs && node ../../scripts/copy-c2pa-wasm.mjs && node ../../scripts/copy-fixtures.mjs",
     "dev": "next dev",
     "build": "next build",
     "typecheck": "tsc --noEmit -p tsconfig.json",

@@ -9,6 +9,9 @@ export function SiteHeader() {
           <BrandGlyph size={28} />
           <span className="site-header__wordmark">provenote</span>
         </Link>
+        <nav className="site-header__nav" aria-label="Primary">
+          <Link href="/gallery/">Gallery of Limits</Link>
+        </nav>
       </div>
     </header>
   );

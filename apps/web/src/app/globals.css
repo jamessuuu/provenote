@@ -173,7 +173,24 @@ hr {
 .site-header__row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: var(--space-2) var(--space-3);
+}
+
+.site-header__nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.site-header__nav a {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.site-header__nav a:hover {
+  color: var(--amber-ink);
 }
 
 .site-header__brand {
@@ -464,4 +481,73 @@ hr {
     grid-template-columns: 1fr;
     gap: var(--space-1);
   }
+}
+
+/* Gallery of Limits */
+
+.page-gallery {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-5);
+}
+
+.gallery-group {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.fixture-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.fixture-card {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  text-align: left;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--space-2);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+.fixture-card:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.fixture-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fixture-card__label {
+  font-weight: 600;
+}
+
+.fixture-card__filename code {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.gallery-group__note {
+  margin-top: var(--space-2);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.gallery-inspector {
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--rule);
+}
+
+.gallery-inspector__heading {
+  margin-bottom: var(--space-2);
 }

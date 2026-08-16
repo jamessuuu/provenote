@@ -11,6 +11,16 @@ const STATE_LABEL = {
   "no-chain": "NO CHAIN",
 } as const;
 
+export interface InspectorProps {
+  /**
+   * Share an existing useInspector() instance instead of owning one
+   * internally — the Gallery of Limits does this so its "load fixture"
+   * buttons and this component's rendering read the exact same state.
+   * Omitted on the homepage, where the Inspector is self-contained.
+   */
+  api?: ReturnType<typeof useInspector>;
+}
+
 /**
  * The Inspector: docs/SPEC.md's core surface, drop/choose → parse
  * client-side → the three honest states. Owns focus management (result
@@ -19,8 +29,9 @@ const STATE_LABEL = {
  * aria-live region so the transition itself is announced too, not just
  * the end state.
  */
-export function Inspector() {
-  const { state, inspect, reset } = useInspector();
+export function Inspector({ api: externalApi }: InspectorProps = {}) {
+  const internalApi = useInspector();
+  const { state, inspect, reset } = externalApi ?? internalApi;
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorHeadingRef = useRef<HTMLHeadingElement>(null);
 
