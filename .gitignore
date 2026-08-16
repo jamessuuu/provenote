@@ -44,3 +44,5 @@ apps/web/CLAUDE.md
 # the Gallery of Limits can serve them same-origin. fixtures/ itself
 # (committed, with fixtures/hashes.json) is the source of truth.
 /apps/web/public/fixtures/
+
+.vercel
