@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480">
+  <!-- provenote fixture 2 base scene: an obviously impossible constructed scene
+       (a whale in open sky above a mountain skyline), built for the "valid
+       signature, fabricated scene" fixture. Deliberately vector-art/silhouette
+       style, not photorealistic, so nobody mistakes it for an attempt at AI
+       photorealism (docs/SPEC.md D3: no AI-detection surface, and this fixture
+       must not itself look like a deepfake) — the point is a real signature on
+       content anyone can see is invented, not a convincing forgery. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a5a8c"/>
+      <stop offset="1" stop-color="#f2c14e"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#sky)"/>
+  <polygon points="0,380 120,220 220,340 340,180 460,360 560,240 640,380 640,480 0,480" fill="#26364a"/>
+  <ellipse cx="380" cy="150" rx="130" ry="46" fill="#e9edf0"/>
+  <path d="M 380 150 Q 300 90 220 130 Q 260 150 300 155 Q 320 175 300 195 Q 360 190 380 150 Z" fill="#e9edf0"/>
+  <circle cx="230" cy="128" r="6" fill="#26364a"/>
+</svg>

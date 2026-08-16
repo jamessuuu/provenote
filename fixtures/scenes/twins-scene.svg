@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480">
+  <!-- provenote fixture 1 base scene: a constructed still life, original work,
+       built for the "chain-absent vs chain-stripped" twins fixture. Deterministic
+       geometry only (no filters, no fonts) so scripts/build-fixtures.mjs renders
+       byte-identical output on every run. -->
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dfe6ec"/>
+      <stop offset="1" stop-color="#aebccb"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="480" fill="url(#wall)"/>
+  <rect x="0" y="330" width="640" height="150" fill="#8a7461"/>
+  <rect x="40" y="300" width="560" height="30" fill="#5b4636"/>
+  <rect x="120" y="180" width="90" height="120" fill="#3d6b52"/>
+  <rect x="230" y="150" width="70" height="150" fill="#c94f3a"/>
+  <circle cx="410" cy="220" r="55" fill="#f2c14e"/>
+  <rect x="470" y="200" width="60" height="100" fill="#3a5a8c"/>
+  <circle cx="150" cy="160" r="18" fill="#f6e7c6"/>
+</svg>

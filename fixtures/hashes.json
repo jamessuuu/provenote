@@ -1,0 +1,9 @@
+{
+  "f1-never-signed.jpg": "0cd315db4dadf2c283a77ae507e7f9de72529566922985b3e5e44385697ea3aa",
+  "f1-signed.jpg": "67a46a09c6902d8874a31867b0541592ad5f09abbcc97917a79f2606f6b6bdea",
+  "f1-stripped.jpg": "0cd315db4dadf2c283a77ae507e7f9de72529566922985b3e5e44385697ea3aa",
+  "f2-fabricated-signed.jpg": "ccf1bd343cdf5f722744e61b0837904cb2dc837c2d38cb71f943b8c395a76cd2",
+  "f3-base-signed.jpg": "a584fec21b0db508a1d1df552a9a65c7ca12e8de52771669dcb781ee539b4917",
+  "f3-innocent-reencode.jpg": "1b4c63d5c57caae0e2c1803160ba784f6115e279779541f5321556b724cb0b3d",
+  "f3-tampered.jpg": "2c1bd8528b8a79a630f2b6d7ba2eb22259a3b76338c2985d17e8707f1f1f7beb"
+}

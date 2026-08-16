@@ -1,0 +1,17 @@
+{
+  "claim_generator_info": [{ "name": "provenote-fixture-builder", "version": "0.1.0" }],
+  "title": "provenote fixture 1 — twins base",
+  "assertions": [
+    {
+      "label": "c2pa.actions",
+      "data": {
+        "actions": [
+          {
+            "action": "c2pa.created",
+            "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/digitalArt"
+          }
+        ]
+      }
+    }
+  ]
+}
