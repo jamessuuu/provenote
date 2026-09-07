@@ -8,15 +8,17 @@ export const metadata: Metadata = {
 export default function LimitationsPage() {
   return (
     <>
-      <div className="shell page-hero">
+      <section className="page-hero">
+        <div className="shell">
         <p className="eyebrow">limitations</p>
         <h1>Every limit here is someone else&rsquo;s finding.</h1>
         <p className="page-hero__tagline">
           Documented, citable limits of C2PA provenance itself, or of this tool — never something
           provenote inferred on its own authority. Sources are linked, not paraphrased into a
           stronger claim than they support.
-        </p>
-      </div>
+          </p>
+        </div>
+      </section>
 
       <div className="shell page-docs docs-index">
         <nav className="docs-index__rail" aria-label="On this page">

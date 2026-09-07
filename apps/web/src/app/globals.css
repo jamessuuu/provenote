@@ -212,10 +212,13 @@ a:hover { color: var(--ink-1); }
 .page-hero {
   position: relative;
   isolation: isolate;
-  /* overflow:hidden is load-bearing, not tidiness. The ambient wash below is
-     a pseudo-element inset -14% on both sides; without a clip it pushed
-     document scrollWidth to 1475px against a 1440px viewport — a horizontal
-     scrollbar caused by decoration nobody can even see. */
+  /* The wash is clipped to this element, so this element must be full-bleed.
+     When .page-hero was ALSO the .shell (max-width 1180, centred), the clip
+     cut the bloom into a visibly lighter rectangle with hard vertical seams
+     down both sides of the column — a decoration that announced itself as a
+     box. Full-bleed section outside, .shell inside; overflow:hidden then only
+     stops the -14% insets pushing document scrollWidth past the viewport,
+     which is what it was for. */
   overflow: hidden;
   padding-block: clamp(34px, 2.8vw, 52px) clamp(24px, 2vw, 34px);
 }

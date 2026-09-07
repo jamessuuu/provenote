@@ -19,7 +19,8 @@ const EXAMPLE = summarizeChain(RECORDED_EXAMPLE as never);
 export default function HomePage() {
   return (
     <>
-      <div className="shell page-hero">
+      <section className="page-hero">
+        <div className="shell">
         <p className="eyebrow">a C2PA honesty test</p>
         <h1>A valid signature proves less than you think.</h1>
         <p className="page-hero__tagline">
@@ -34,8 +35,9 @@ export default function HomePage() {
               3 adversarial demonstrations &rarr;
             </Link>
           </span>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div className="shell page-inspector">
         <Inspector example={EXAMPLE} />
