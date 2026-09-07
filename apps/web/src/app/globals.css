@@ -1,143 +1,122 @@
-/* provenote — house style (BRAND-KIT.md, binding palette).
-   PAPER background, INK text/strokes, one AMBER signal color, RULE
-   hairlines. 0-2px radius everywhere, no gradients, no glow, no dark
-   chrome, no side-tab accent borders. Type scale step ratio 1.25
-   (Major Third) minimum between adjacent steps. */
+/* provenote — product surface.
+ *
+ * The page this replaces was a paper document: cream ground, 2px radii, one
+ * hairline of depth, "no gradients, no glow, no dark chrome" written into the
+ * house style as a rule. Applied faithfully it produced a rendered README —
+ * five paragraphs of prose above the fold and, below them, an empty drop
+ * zone. A tool whose entire value is showing you a parsed chain showed no
+ * chain at all until you went and found a file.
+ *
+ * This is an inspector's bench: a dark ground with layered surfaces, a
+ * chroma-bearing elevation ladder, one ambient amber wash, and a real parsed
+ * chain rendered above the fold.
+ *
+ * What did NOT change is the honesty grammar. Every "Proves / Does not
+ * prove" pair still reads as a pair, and the does-not-prove side is still
+ * given equal weight rather than being demoted to fine print — the entire
+ * point of the product is that the second line is as important as the first.
+ *
+ * Colour rule: every colour is declared once, in :root, and composed with
+ * var() everywhere else.
+ */
+
+/* ============================================================ 1. FACES ==== */
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/fonts/SpaceGrotesk[wght].woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("/fonts/Manrope[wght].woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono[wght].woff2") format("woff2-variations");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+/* ======================================================= 2. SUBSTRATE ===== */
 
 :root {
-  --paper: #faf7f2;
-  --ink: #1a1712;
+  color-scheme: dark;
+
+  /* The brand amber, kept — it is provenote's signal and its caution colour
+     at once, which suits a tool whose job is to qualify what it shows you. */
   --amber: #b45309;
-  --amber-ink: #7c3a06; /* amber text on paper, AA-safe */
-  --rule: #e4ddd3;
-  --ink-soft: #57524a; /* secondary text, still >= 4.5:1 on paper */
+  --sig-h: 62;
+  --sub-h: 252; /* a cool, evidential dark — a bench, not a darkroom */
 
-  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial,
-    sans-serif;
+  --s-0: oklch(0.147 0.013 var(--sub-h));
+  --s-1: oklch(0.190 0.014 var(--sub-h));
+  --s-2: oklch(0.233 0.014 var(--sub-h));
+  --s-3: oklch(0.284 0.013 var(--sub-h));
+  --edge-lo: oklch(0.320 0.013 var(--sub-h));
+  --edge-hi: oklch(0.438 0.014 var(--sub-h));
 
-  /* Type scale, ratio 1.25 between every adjacent step. */
-  --step--1: 0.8rem;
-  --step-0: 1rem;
-  --step-1: 1.25rem;
-  --step-2: 1.5625rem;
-  --step-3: 1.9531rem;
-  --step-4: 2.4414rem;
-  --step-5: 3.0518rem;
+  --ink-1: oklch(0.965 0.004 var(--sub-h));
+  --ink-2: oklch(0.805 0.009 var(--sub-h));
+  --ink-3: oklch(0.665 0.012 var(--sub-h));
 
-  --radius: 2px;
+  --shadow-ink: oklch(0.07 0.03 262);
+
+  --sig: oklch(0.79 0.145 var(--sig-h));
+  --sig-ink: oklch(0.86 0.12 var(--sig-h));
+  --sig-glow: oklch(0.87 0.17 var(--sig-h));
+
+  --ok: oklch(0.77 0.155 152);
+  --bad: oklch(0.72 0.17 27);
+  --unknown: oklch(0.72 0.10 var(--sub-h));
+
+  --lit: inset 0 1px 0 var(--edge-hi);
+  --elev-1: 0 1px 2px -1px oklch(from var(--shadow-ink) l c h / 32%),
+            0 4px 12px -4px oklch(from var(--shadow-ink) l c h / 36%);
+  --elev-2: 0 2px 4px -2px oklch(from var(--shadow-ink) l c h / 38%),
+            0 14px 34px -10px oklch(from var(--shadow-ink) l c h / 46%);
+  --elev-3: 0 6px 12px -6px oklch(from var(--shadow-ink) l c h / 44%),
+            0 32px 76px -18px oklch(from var(--shadow-ink) l c h / 56%);
+
+  --r-panel: 12px;
+  --r-control: 8px;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --fast: 140ms;
+  --slow: 440ms;
+
+  --f-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --f-data: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --f-text: "Manrope", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+
+  --shell-max: 1180px;
+
   --space-1: 0.5rem;
   --space-2: 1rem;
   --space-3: 1.5rem;
   --space-4: 2.5rem;
   --space-5: 4rem;
-
-  color-scheme: light;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  padding: 0;
-  margin: 0;
-}
+* { box-sizing: border-box; }
+html, body { padding: 0; margin: 0; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: var(--step-0);
-  line-height: 1.55;
+  background: var(--s-0);
+  color: var(--ink-1);
+  font-family: var(--f-text);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  margin: 0 0 var(--space-2);
-  /* Headings carry single long unbreakable words ("provenote",
-     "Limitations") set in a monospace face at large sizes. Monospace
-     glyph widths vary meaningfully by platform (the CI runner's fallback
-     font is measurably wider per character than a typical dev machine's),
-     so a fixed-width word that comfortably fits on one platform can be a
-     few px wider on another. break-word is a no-op whenever the word
-     already fits (the overwhelming majority of renders); it only engages
-     as a last resort exactly when a word would otherwise push past the
-     viewport edge, which is what actually caused a Linux-CI-only 1px
-     horizontal-overflow failure at 320px — see docs/DEVIATIONS.md. */
   overflow-wrap: break-word;
 }
 
-h1 {
-  font-size: var(--step-5);
-}
-h2 {
-  font-size: var(--step-3);
-}
-h3 {
-  font-size: var(--step-2);
-}
-h4 {
-  font-size: var(--step-1);
-}
-
-p {
-  margin: 0 0 var(--space-2);
-  max-width: 68ch;
-}
-
-a {
-  color: var(--amber-ink);
-  text-underline-offset: 0.15em;
-}
-a:hover {
-  color: var(--ink);
-}
-
-code,
-pre {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-pre {
-  background: #ffffff;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: var(--space-2);
-  overflow-x: auto;
-}
-
-button {
-  font-family: var(--font-sans);
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--rule);
-  margin: var(--space-4) 0;
-}
-
-.shell {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 0 var(--space-3);
-}
-
-/* Focus visibility — keyboard-complete per BATCH-2-STANDARDS. A single
-   consistent ring, never suppressed. */
-:focus-visible {
-  outline: 2px solid var(--amber);
-  outline-offset: 2px;
-}
+.shell { max-width: var(--shell-max); margin-inline: auto; padding-inline: 24px; }
+@media (max-width: 640px) { .shell { padding-inline: 18px; } }
 
 .visually-hidden {
   position: absolute;
@@ -146,475 +125,584 @@ hr {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip: rect(0 0 0 0);
   white-space: nowrap;
   border: 0;
 }
 
 .skip-link {
   position: absolute;
-  left: var(--space-2);
-  top: -48px;
-  background: var(--ink);
-  color: var(--paper);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius);
+  left: 8px;
+  top: -100%;
   z-index: 100;
-  transition: top 0.15s ease;
+  background: var(--s-2);
+  color: var(--ink-1);
+  padding: 10px 16px;
+  border-radius: var(--r-control);
+  box-shadow: var(--lit), var(--elev-2);
+  font-family: var(--f-data);
+  font-size: 0.82rem;
+  text-decoration: none;
 }
-.skip-link:focus {
-  top: var(--space-2);
+.skip-link:focus-visible { top: 8px; }
+
+/* ============================================================ 3. TYPE ===== */
+
+h1, h2, h3, h4 { font-family: var(--f-display); font-weight: 700; margin: 0 0 var(--space-2); line-height: 1.15; letter-spacing: -0.03em; }
+
+h1 { font-size: clamp(2.15rem, 1.3rem + 3.7vw, 3.7rem); line-height: 1.02; letter-spacing: -0.042em; text-wrap: balance; }
+h2 { font-size: clamp(1.45rem, 1.15rem + 1.4vw, 2.1rem); }
+h3 { font-size: 1.12rem; }
+h4 { font-size: 0.98rem; }
+
+p { margin: 0 0 var(--space-2); max-width: 68ch; }
+
+code, pre, .data { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+code { font-size: 0.88em; }
+
+a { color: var(--sig-ink); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--ink-1); }
+
+:focus-visible { outline: 2px solid var(--sig); outline-offset: 3px; border-radius: var(--r-control); }
+
+.eyebrow {
+  font-family: var(--f-data);
+  font-size: 0.73rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 10px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Site chrome. A single top hairline, never a side-tab accent border. */
+/* ========================================================== 4. HEADER ===== */
 
 .site-header {
-  border-bottom: 1px solid var(--rule);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in oklab, var(--s-0) 93%, transparent);
+  border-bottom: 1px solid var(--edge-lo);
 }
 
-.site-header__row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: var(--space-1);
-  padding: var(--space-2) var(--space-3);
-}
+.site-header__row { display: flex; align-items: center; gap: 12px; height: 58px; }
 
-.site-header__nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-1) var(--space-2);
-}
+.site-header__brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-1); text-decoration: none; }
+.site-header__wordmark { font-family: var(--f-display); font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; }
+
+.site-header__nav { margin-left: auto; display: flex; gap: 4px; font-family: var(--f-data); font-size: 0.8rem; }
 
 .site-header__nav a {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--ink-soft);
+  color: var(--ink-3);
   text-decoration: none;
-}
-
-.site-header__nav a:hover {
-  color: var(--amber-ink);
-}
-
-.site-header__brand {
-  display: flex;
+  padding: 8px 12px;
+  min-height: 32px;
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  color: var(--ink);
-  text-decoration: none;
+  border-radius: var(--r-control);
+  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
 
-.site-header__wordmark {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: var(--step-1);
-  letter-spacing: -0.01em;
-}
+.site-header__nav a:hover { color: var(--ink-1); background: var(--s-2); }
 
-.site-footer {
-  border-top: 1px solid var(--rule);
-  margin-top: var(--space-5);
-}
+@media (max-width: 560px) { .site-header__nav a { padding: 8px 9px; font-size: 0.75rem; } }
 
-.footer-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
-
-.footer-row a {
-  color: var(--ink-soft);
-}
-.footer-row a:hover {
-  color: var(--amber-ink);
-}
-
-/* Homepage hero */
+/* =========================================================== 5. LAYOUT ==== */
 
 .page-hero {
-  padding-top: var(--space-5);
-  padding-bottom: var(--space-4);
+  position: relative;
+  isolation: isolate;
+  /* overflow:hidden is load-bearing, not tidiness. The ambient wash below is
+     a pseudo-element inset -14% on both sides; without a clip it pushed
+     document scrollWidth to 1475px against a 1440px viewport — a horizontal
+     scrollbar caused by decoration nobody can even see. */
+  overflow: hidden;
+  padding-block: clamp(34px, 2.8vw, 52px) clamp(24px, 2vw, 34px);
 }
 
-.page-hero__mark {
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: -30% -14% auto -14%;
+  height: 170%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(48% 42% at 18% 0%, oklch(from var(--sig-glow) l c h / 16%), transparent 68%),
+    radial-gradient(42% 38% at 88% 4%, oklch(0.72 0.13 262 / 12%), transparent 70%);
+}
+
+.page-hero__mark { margin-bottom: 16px; color: var(--sig); }
+.page-hero h1 { margin-bottom: 14px; }
+
+.page-hero__tagline {
+  font-size: clamp(1.02rem, 0.97rem + 0.24vw, 1.18rem);
+  color: var(--ink-2);
+  max-width: 56ch;
   margin-bottom: var(--space-2);
 }
 
-.page-hero__tagline {
-  font-size: var(--step-2);
-  color: var(--ink-soft);
-  max-width: 52ch;
+.page-inspector { padding-block: 0 clamp(48px, 4vw, 80px); }
+.page-gallery { padding-block: clamp(30px, 2.5vw, 44px) clamp(48px, 4vw, 84px); }
+.page-docs { padding-block: clamp(24px, 2vw, 36px) clamp(48px, 4vw, 84px); }
+
+.claims { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+
+.claim {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: var(--s-2);
+  box-shadow: var(--lit);
+  font-family: var(--f-data);
+  font-size: 0.75rem;
+  color: var(--ink-2);
 }
 
-/* Inspector */
-
-.page-inspector {
-  padding-bottom: var(--space-5);
+.claim--live::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--sig);
+  box-shadow: 0 0 0 3px oklch(from var(--sig) l c h / 22%);
+  flex: none;
 }
+
+/* ========================================================= 6. INSPECTOR === */
+
+.inspector {
+  border-radius: var(--r-panel);
+  background: var(--s-1);
+  box-shadow: var(--lit), var(--elev-3);
+  overflow: hidden;
+}
+
+.inspector__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 11px 16px;
+  background: var(--s-2);
+  border-bottom: 1px solid var(--edge-lo);
+  font-family: var(--f-data);
+  font-size: 0.72rem;
+  color: var(--ink-3);
+}
+
+.inspector__tag {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 10px;
+  min-height: 24px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--sig) 16%, var(--s-2));
+  color: var(--sig-ink);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+}
+
+/* --- drop zone ---------------------------------------------------------- */
 
 .dropzone {
-  border: 1px dashed var(--rule);
-  border-radius: var(--radius);
-  transition: border-color 0.15s ease, background-color 0.15s ease;
+  margin: 18px;
+  border-radius: var(--r-control);
+  background: var(--s-0);
+  box-shadow: inset 0 0 0 1px var(--edge-lo);
+  transition: box-shadow var(--fast) var(--ease), background-color var(--fast) var(--ease);
 }
 
-.dropzone--over {
-  border-color: var(--amber);
-  border-style: solid;
-  background: #fffaf0;
-}
-
-.dropzone--busy {
-  border-style: solid;
-}
+.dropzone--over { box-shadow: inset 0 0 0 2px var(--sig); background: color-mix(in oklab, var(--sig) 8%, var(--s-0)); }
+.dropzone--busy { opacity: 0.65; }
 
 .dropzone__label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-4) var(--space-3);
-  text-align: center;
+  display: block;
+  padding: 22px;
   cursor: pointer;
+  text-align: center;
 }
 
-.dropzone--busy .dropzone__label {
-  cursor: wait;
-}
+/* Once a chain is on screen the drop zone is a call to action, not the main
+   event, so it gives its height back. :has is the right tool here — the
+   DropZone component does not and should not know what is rendered after it. */
+.inspector:has(.inspector-result) .dropzone__label { padding: 16px 22px; }
+.inspector:has(.inspector-result) .dropzone__title { font-size: 0.98rem; }
+
+.dropzone--busy .dropzone__label { cursor: progress; }
 
 .dropzone__title {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: var(--step-1);
+  display: block;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: -0.02em;
+  color: var(--ink-1);
 }
 
 .dropzone__hint {
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-  max-width: 42ch;
+  display: block;
+  margin: 7px auto 0;
+  max-width: 62ch;
+  font-family: var(--f-data);
+  font-size: 0.73rem;
+  color: var(--ink-3);
+  line-height: 1.55;
 }
 
-.inspector-error {
-  margin-top: var(--space-3);
-  padding: var(--space-3);
-  border: 1px solid var(--amber);
-  border-radius: var(--radius);
-}
+/* --- result / error ----------------------------------------------------- */
 
-.inspector-error__heading {
-  font-size: var(--step-1);
-  margin-bottom: var(--space-1);
-}
+.inspector-result, .inspector-error { padding: 0 18px 18px; }
+.inspector-error { color: var(--ink-1); }
+.inspector-error__heading { color: var(--bad); font-size: 1.05rem; }
 
-.inspector-result {
-  margin-top: var(--space-3);
-}
-
-.inspector-result__filename {
-  margin-top: var(--space-3);
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
+.inspector-result__filename { font-family: var(--f-data); font-size: 0.74rem; color: var(--ink-3); margin: 14px 0 0; }
 
 .button-secondary {
-  margin-top: var(--space-2);
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  padding: 0.55em 1em;
-  border: 1px solid var(--ink);
-  border-radius: var(--radius);
-  background: var(--paper);
-  color: var(--ink);
+  font: 500 0.82rem var(--f-data);
   cursor: pointer;
+  margin-top: 12px;
+  min-height: 40px;
+  padding: 10px 16px;
+  border-radius: var(--r-control);
+  border: 0;
+  color: var(--ink-1);
+  background: var(--s-2);
+  box-shadow: var(--lit);
+  transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease),
+              box-shadow var(--fast) var(--ease);
 }
 
-.button-secondary:hover {
-  background: var(--ink);
-  color: var(--paper);
-}
+.button-secondary:hover { background: var(--s-3); transform: translateY(-1px); box-shadow: var(--lit), var(--elev-1); }
+.button-secondary:active { transform: translateY(0); }
 
-/* Chain summary */
+/* ====================================================== 7. CHAIN SUMMARY == */
 
 .chain-summary {
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
+  border-radius: var(--r-control);
+  background: var(--s-0);
+  padding: 22px;
+  box-shadow: inset 0 0 0 1px var(--edge-lo);
 }
 
 .chain-summary__eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--ink-soft);
-  margin: 0 0 var(--space-1);
+  font-family: var(--f-data);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 11px;
+  min-height: 26px;
+  border-radius: 999px;
 }
 
-.chain-summary--fails-validation .chain-summary__eyebrow {
-  color: var(--amber-ink);
-}
+.chain-summary__eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: currentColor; flex: none; }
+
+.chain-summary--validates .chain-summary__eyebrow { color: var(--ok); background: color-mix(in oklab, var(--ok) 16%, var(--s-0)); }
+.chain-summary--fails-validation .chain-summary__eyebrow { color: var(--bad); background: color-mix(in oklab, var(--bad) 16%, var(--s-0)); }
+.chain-summary--no-chain .chain-summary__eyebrow { color: var(--unknown); background: color-mix(in oklab, var(--unknown) 14%, var(--s-0)); }
 
 .chain-summary__headline {
-  font-family: var(--font-sans);
-  font-size: var(--step-2);
-  font-weight: 600;
-  max-width: 60ch;
-  margin-bottom: var(--space-3);
+  font-family: var(--f-display);
+  font-size: clamp(1.1rem, 0.98rem + 0.55vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.028em;
+  line-height: 1.28;
+  margin: 0 0 var(--space-3);
+  max-width: 58ch;
+  outline: none;
 }
 
 .chain-block {
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid var(--edge-lo);
 }
 
 .chain-block h3 {
-  margin-bottom: var(--space-2);
+  font-family: var(--f-data);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 12px;
 }
 
 .kv {
   display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: var(--space-1) var(--space-2);
-  margin: 0 0 var(--space-2);
+  grid-template-columns: 1fr;
+  gap: 2px 18px;
+  margin: 0 0 14px;
+  font-family: var(--f-data);
+  font-size: 0.8rem;
 }
 
-.kv dt {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  color: var(--ink-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
+@media (min-width: 620px) { .kv { grid-template-columns: 9.5rem minmax(0, 1fr); } }
 
-.kv dd {
-  margin: 0;
-}
+.kv dt { color: var(--ink-3); padding: 5px 0; }
+.kv dd { margin: 0; color: var(--ink-1); padding: 5px 0; overflow-wrap: anywhere; }
+.kv__raw { color: var(--ink-3); font-size: 0.9em; }
 
-.kv__raw {
-  color: var(--ink-soft);
-  font-size: 0.85em;
-}
-
+/* The proves / does-not-prove pair. Both halves carry the same weight on
+   purpose: demoting the second one to fine print would quietly undo the
+   product's entire argument. They are distinguished by a leading dot and a
+   tinted wash, never by a thick coloured border down one side. */
 .proves-line {
-  margin: var(--space-2) 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  grid-template-columns: 1fr;
 }
+
+@media (min-width: 760px) { .proves-line { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 .proves-line__row {
-  display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: var(--space-2);
-  align-items: baseline;
+  border-radius: var(--r-control);
+  padding: 13px 15px;
+  background: var(--s-1);
 }
 
 .proves-line__row dt {
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  font-family: var(--f-data);
+  font-size: 0.66rem;
   font-weight: 600;
-  color: var(--ink-soft);
-}
-
-.proves-line__row--not dt {
-  color: var(--amber-ink);
-}
-
-.proves-line__row dd {
-  margin: 0;
-  color: var(--ink);
-}
-
-.assertion-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
 }
 
-.assertion-list__item {
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: var(--space-2);
-}
+.proves-line__row dt::before { content: ""; width: 6px; height: 6px; border-radius: 999px; background: currentColor; flex: none; }
+
+.proves-line__row dd { margin: 0; font-size: 0.87rem; line-height: 1.55; color: var(--ink-2); }
+
+.proves-line__row--proves { background: color-mix(in oklab, var(--ok) 9%, var(--s-1)); }
+.proves-line__row--proves dt { color: var(--ok); }
+
+.proves-line__row--not { background: color-mix(in oklab, var(--sig) 10%, var(--s-1)); }
+.proves-line__row--not dt { color: var(--sig-ink); }
+
+.assertion-list, .ingredient-list { list-style: none; margin: 0 0 14px; padding: 0; }
+
+.assertion-list__item { padding: 14px 0; border-top: 1px solid oklch(from var(--edge-lo) l c h / 60%); }
+.assertion-list__item:first-child { border-top: 0; padding-top: 0; }
 
 .assertion-list__item h4 {
-  margin-bottom: var(--space-1);
+  font-family: var(--f-display);
+  font-size: 0.98rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 9px;
 }
 
 .assertion-list__raw-label {
-  font-size: 0.7em;
+  font-family: var(--f-data);
+  font-size: 0.68rem;
   font-weight: 400;
-  color: var(--ink-soft);
-  margin-left: var(--space-1);
+  color: var(--ink-3);
+  background: var(--s-2);
+  padding: 2px 7px;
+  border-radius: 5px;
 }
 
-.ingredient-list {
-  margin: 0 0 var(--space-2);
-  padding-left: 1.25em;
-}
+.ingredient-list li { font-size: 0.9rem; color: var(--ink-2); padding: 6px 0; }
 
 .validation-details {
-  margin-top: var(--space-3);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: var(--space-2);
+  margin-top: 16px;
+  border-radius: var(--r-control);
+  background: var(--s-1);
+  overflow: hidden;
 }
 
-.validation-details summary {
+.validation-details > summary {
   cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  list-style: none;
+  padding: 11px 15px;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--f-data);
+  font-size: 0.76rem;
+  color: var(--ink-2);
+  transition: background-color var(--fast) var(--ease);
 }
 
-.validation-details ul {
-  margin: var(--space-2) 0 0;
-  padding-left: 1.25em;
-}
+.validation-details > summary::-webkit-details-marker { display: none; }
+.validation-details > summary::before { content: "+"; color: var(--sig-ink); font-weight: 700; }
+.validation-details[open] > summary::before { content: "\2212"; }
+.validation-details > summary:hover { background: var(--s-2); }
+.validation-details ul { margin: 0; padding: 0 15px 15px 32px; font-size: 0.82rem; color: var(--ink-2); }
+.validation-details li { margin-bottom: 7px; }
 
-@media (max-width: 480px) {
-  .proves-line__row {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-}
-
-/* Gallery of Limits */
-
-.page-gallery {
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-5);
-}
+/* ========================================================== 8. GALLERY ==== */
 
 .gallery-group {
-  margin-top: var(--space-5);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
+  border-radius: var(--r-panel);
+  background: var(--s-1);
+  box-shadow: var(--lit), var(--elev-1);
+  padding: 22px;
+  margin-bottom: 16px;
 }
 
-.fixture-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  margin-top: var(--space-2);
-}
+.gallery-group h2 { font-size: 1.25rem; margin-bottom: 10px; }
+.gallery-group p { color: var(--ink-2); font-size: 0.92rem; }
+.gallery-group__note { font-family: var(--f-data); font-size: 0.75rem; color: var(--ink-3); margin: 0; }
+
+.fixture-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 16px 0; }
 
 .fixture-card {
-  flex: 1 1 200px;
+  font: 500 0.82rem var(--f-data);
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--r-control);
+  border: 0;
+  color: var(--ink-1);
+  background: var(--s-2);
+  box-shadow: var(--lit);
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  text-align: left;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: var(--space-2);
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  cursor: pointer;
+  transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease),
+              box-shadow var(--fast) var(--ease);
 }
 
-.fixture-card:hover:not(:disabled) {
-  border-color: var(--ink);
+.fixture-card:hover:not(:disabled) { background: var(--s-3); transform: translateY(-3px); box-shadow: var(--lit), var(--elev-2); }
+.fixture-card:disabled { opacity: 0.45; cursor: default; }
+
+.fixture-card__thumb { order: -1; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: var(--s-3); }
+.fixture-card__body { display: block; padding: 12px 14px 14px; }
+.fixture-card__label { display: block; font-family: var(--f-display); font-size: 0.95rem; letter-spacing: -0.02em; }
+.fixture-card__note { display: block; margin-top: 5px; font-size: 0.71rem; color: var(--ink-2); line-height: 1.45; white-space: normal; }
+.fixture-card__filename code { display: block; margin-top: 8px; font-size: 0.66rem; color: var(--ink-3); }
+
+.gallery-inspector { margin-top: 22px; }
+.gallery-inspector__heading { font-size: 1.05rem; margin-bottom: 12px; }
+
+.thumb-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0; }
+
+.thumb {
+  border-radius: var(--r-control);
+  overflow: hidden;
+  background: var(--s-2);
+  box-shadow: var(--lit);
 }
 
-.fixture-card:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+.thumb img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+.thumb figcaption { font-family: var(--f-data); font-size: 0.66rem; color: var(--ink-3); padding: 8px 10px; line-height: 1.4; }
 
-.fixture-card__label {
-  font-weight: 600;
-}
-
-.fixture-card__filename code {
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
-
-.gallery-group__note {
-  margin-top: var(--space-2);
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
-
-.gallery-inspector {
-  margin-top: var(--space-5);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
-}
-
-.gallery-inspector__heading {
-  margin-bottom: var(--space-2);
-}
-
-/* /docs/limitations */
-
-.page-docs {
-  padding-top: var(--space-4);
-  padding-bottom: var(--space-5);
-}
+/* ============================================================= 9. DOCS ==== */
 
 .docs-block {
-  margin-top: var(--space-4);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--rule);
-  max-width: 68ch;
+  border-radius: var(--r-panel);
+  background: var(--s-1);
+  box-shadow: var(--lit), var(--elev-1);
+  padding: 22px;
+  margin-bottom: 16px;
 }
 
-.docs-block ol,
-.docs-block ul {
-  padding-left: 1.4em;
+.docs-block h2 { font-size: 1.2rem; }
+.docs-block ul { padding-left: 1.15em; margin: 0 0 var(--space-2); }
+.docs-block li { margin-bottom: 9px; color: var(--ink-2); font-size: 0.92rem; }
+.docs-block__note { font-family: var(--f-data); font-size: 0.75rem; color: var(--ink-3); }
+
+.docs-index { display: grid; gap: 26px; grid-template-columns: 1fr; align-items: start; }
+
+@media (min-width: 940px) {
+  .docs-index { grid-template-columns: 15rem minmax(0, 1fr); gap: 52px; }
+  .docs-index__rail { position: sticky; top: 78px; }
 }
 
-.docs-block li {
-  margin-bottom: var(--space-1);
+.docs-index__list { list-style: none; margin: 8px 0 0; padding: 0; counter-reset: idx; }
+.docs-index__list li { counter-increment: idx; }
+
+.docs-index__list a {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 9px 12px;
+  min-height: 34px;
+  border-radius: var(--r-control);
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
 
-.docs-block__note {
-  color: var(--ink-soft);
-  font-size: var(--step--1);
+.docs-index__list a::before { content: counter(idx); font-family: var(--f-data); font-size: 0.7rem; color: var(--sig-ink); flex: none; }
+.docs-index__list a:hover { background: var(--s-2); color: var(--ink-1); }
+
+.docs-block blockquote {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border-radius: var(--r-control);
+  background: color-mix(in oklab, var(--sig) 8%, var(--s-2));
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-1);
 }
 
-blockquote {
-  margin: var(--space-2) 0;
-  padding: var(--space-1) 0 var(--space-1) var(--space-2);
-  border-left: 2px solid var(--amber);
-  max-width: 62ch;
+.docs-block blockquote cite { display: block; margin-top: 8px; font-size: 0.8rem; color: var(--ink-3); font-style: normal; }
+.docs-block p { font-size: 0.92rem; color: var(--ink-2); }
+.docs-block p:last-child { margin-bottom: 0; }
+
+/* ========================================================== 10. FOOTER ==== */
+
+.site-footer {
+  border-top: 1px solid var(--edge-lo);
+  padding-block: 28px 42px;
+  font-size: 0.82rem;
+  color: var(--ink-3);
 }
 
-blockquote cite {
-  display: block;
-  margin-top: var(--space-1);
-  font-style: normal;
-  font-size: var(--step--1);
-  color: var(--ink-soft);
+.footer-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+/* min-height is the WCAG 2.2 AA floor (SC 2.5.8, 24x24), not a preference:
+   the footer's "source" link measured 42x21 on a phone. */
+.footer-row a {
+  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
 
-/* attribution-kit v1 — the maker's mark inherits color; the pin takes the project's amber */
+.footer-row a:hover { color: var(--ink-1); }
+
+/* attribution-kit v1 */
 .aj-attribution { margin: 0; font: inherit; line-height: 1.5; color: inherit; }
 .aj-attribution__mark { display: inline-block; width: 20px; height: 20px; vertical-align: -0.3em; margin-right: 0.45em; }
 .aj-attribution__mark--full { width: 48px; height: 48px; vertical-align: middle; }
 .aj-attribution a { color: inherit; text-decoration: underline; text-underline-offset: 0.15em; }
-.aj-attribution a:hover { text-decoration-thickness: 2px; }
+.aj-attribution a:hover { text-decoration-thickness: 2px; color: var(--ink-1); }
 .aj-attribution a:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 .aj-attribution__sep { margin: 0 0.35em; }
 .aj-attribution { --aj-attribution-signal: var(--amber); }
+
+/* ==================================================== 11. REDUCED MOTION == */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .button-secondary, .button-secondary:hover, .fixture-card, .fixture-card:hover:not(:disabled),
+  .site-header__nav a, .validation-details > summary, .dropzone {
+    transition: none;
+    transform: none;
+  }
+}

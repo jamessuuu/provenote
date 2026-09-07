@@ -10,8 +10,8 @@ export function SiteHeader() {
           <span className="site-header__wordmark">provenote</span>
         </Link>
         <nav className="site-header__nav" aria-label="Primary">
-          <Link href="/gallery/">Gallery of Limits</Link>
-          <Link href="/docs/limitations/">Limitations</Link>
+          <Link href="/gallery/">Gallery</Link>
+          <Link href="/docs/limitations/">Limits</Link>
         </nav>
       </div>
     </header>

@@ -7,14 +7,32 @@ export const metadata: Metadata = {
 
 export default function LimitationsPage() {
   return (
-    <div className="shell page-docs">
-      <h1>Limitations</h1>
-      <p className="page-hero__tagline">
-        Everything below is a documented, citable limit of C2PA provenance itself, or of this tool
-        specifically — never something provenote infers, discovers, or asserts on its own
-        authority. Where a finding comes from a formal analysis or a live vendor bug report, the
-        source is linked, not paraphrased into a stronger claim than it supports.
-      </p>
+    <>
+      <div className="shell page-hero">
+        <p className="eyebrow">limitations</p>
+        <h1>Every limit here is someone else&rsquo;s finding.</h1>
+        <p className="page-hero__tagline">
+          Documented, citable limits of C2PA provenance itself, or of this tool — never something
+          provenote inferred on its own authority. Sources are linked, not paraphrased into a
+          stronger claim than they support.
+        </p>
+      </div>
+
+      <div className="shell page-docs docs-index">
+        <nav className="docs-index__rail" aria-label="On this page">
+          <p className="eyebrow">on this page</p>
+          <ol className="docs-index__list">
+            <li><a href="#scope-heading">What this page is not</a></li>
+            <li><a href="#provenance-heading">Provenance is not authenticity</a></li>
+            <li><a href="#absence-heading">A missing chain is not evidence</a></li>
+            <li><a href="#ambiguous-heading">&ldquo;Invalid&rdquo; is ambiguous</a></li>
+            <li><a href="#findings-heading">Six protocol-level findings</a></li>
+            <li><a href="#self-heading">Our own dependence on the parser</a></li>
+            <li><a href="#sources-heading">Sources</a></li>
+          </ol>
+        </nav>
+
+        <div>
 
       <section className="docs-block" aria-labelledby="scope-heading">
         <h2 id="scope-heading">What this page is not</h2>
@@ -271,6 +289,8 @@ export default function LimitationsPage() {
           </li>
         </ul>
       </section>
-    </div>
+        </div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import type { ChainSummary } from "@provenote/core";
 import { ChainSummaryView } from "./ChainSummaryView";
 import { DropZone } from "./DropZone";
 import { useInspector } from "./useInspector";
@@ -19,6 +20,18 @@ export interface InspectorProps {
    * Omitted on the homepage, where the Inspector is self-contained.
    */
   api?: ReturnType<typeof useInspector>;
+  /**
+   * A chain to render while nothing has been inspected yet, so the surface
+   * is never an empty box. The home page passes a summary produced at build
+   * time by running summarizeChain() — the same transformer a live read uses
+   * — over a ManifestStore recorded verbatim from a real browser run.
+   *
+   * It is labelled RECORDED EXAMPLE on screen and the label switches to
+   * READ IN THIS TAB the moment a real file is parsed. Showing a recorded
+   * result without saying so would be exactly the kind of quiet overclaim
+   * this product exists to argue against.
+   */
+  example?: ChainSummary;
 }
 
 /**
@@ -29,7 +42,7 @@ export interface InspectorProps {
  * aria-live region so the transition itself is announced too, not just
  * the end state.
  */
-export function Inspector({ api: externalApi }: InspectorProps = {}) {
+export function Inspector({ api: externalApi, example }: InspectorProps = {}) {
   const internalApi = useInspector();
   const { state, inspect, reset } = externalApi ?? internalApi;
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -49,12 +62,38 @@ export function Inspector({ api: externalApi }: InspectorProps = {}) {
           ? `Could not read ${state.fileName}.`
           : "";
 
+  const showingExample = example !== undefined && state.status === "idle";
+
   return (
     <div className="inspector">
+      <div className="inspector__bar">
+        <span>inspector</span>
+        <span className="inspector__tag">
+          {showingExample
+            ? "recorded example"
+            : state.status === "result"
+              ? "read in this tab"
+              : state.status === "loading"
+                ? "reading…"
+                : "waiting for a file"}
+        </span>
+      </div>
+
       <DropZone onFile={inspect} busy={state.status === "loading"} />
       <div aria-live="polite" className="visually-hidden">
         {liveMessage}
       </div>
+
+      {showingExample && (
+        <div className="inspector-result">
+          <ChainSummaryView summary={example} />
+          <p className="inspector-result__filename">
+            Recorded from a real browser run of <code>@contentauth/c2pa-web</code> against a
+            c2patool-signed JPEG, then summarised by the same code a live read uses. Drop your own
+            file above to replace it.
+          </p>
+        </div>
+      )}
 
       {state.status === "error" && (
         <div className="inspector-error" role="alert">
