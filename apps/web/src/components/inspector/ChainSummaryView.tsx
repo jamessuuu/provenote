@@ -7,11 +7,32 @@ const STATE_LABEL: Record<ChainSummary["state"], string> = {
   "no-chain": "NO CHAIN",
 };
 
+/**
+ * Formatted in UTC with a pinned locale, deliberately, for two reasons.
+ *
+ * Correctness: the home page renders an example chain on the server, and
+ * `toLocaleString(undefined, ...)` resolves against the BUILD machine's
+ * locale and time zone there and the VISITOR's in the browser. The two
+ * disagree, React reports a hydration text mismatch (#418) on the live site,
+ * and the surface silently re-renders. Caught by reading the deployed page's
+ * console, not by any test.
+ *
+ * Honesty: a C2PA signing time is a fact about the signature, not about the
+ * reader. Quietly shifting it into whatever zone the viewer's laptop is set
+ * to — with nothing on screen saying so — is a small untruth on a page whose
+ * entire argument is about small untruths. It says UTC because it is UTC.
+ */
+const TIME_FMT = new Intl.DateTimeFormat("en-GB", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+
 function formatTime(time: string | null): string | null {
   if (!time) return null;
   const date = new Date(time);
   if (Number.isNaN(date.getTime())) return null;
-  return date.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+  return `${TIME_FMT.format(date)} UTC`;
 }
 
 function ProvesLine({ line }: { line: ProvesLineType }) {
